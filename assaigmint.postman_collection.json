@@ -1,0 +1,148 @@
+{
+  "info": {
+    "_postman_id": "89b51168-2436-4902-8fe3-9a271243ad0b",
+    "name": "assaigmint",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "50272337",
+    "_collection_link": "https://go.postman.co/collection/50272337-89b51168-2436-4902-8fe3-9a271243ad0b?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "user-collction",
+      "item": [
+        {
+          "name": "sighnup",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"firstname\": \"omar\",\n    \"Lastname\":\"shawky\",\n    \"age\":23,\n    \"username\":\"omarshawky\",\n    \"email\":\"omarshawky23@gmail.com\",\n    \"Gander\":0,\n    \"provaid\":1,\n    \"role\":1,\n    \"passwerd\":123444\n\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseurl}}/user/SighnUps",
+              "host": [
+                "{{baseurl}}"
+              ],
+              "path": [
+                "user",
+                "SighnUps"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "let res = pm.response.json()\nlet accessToken = res.data.accesstoken\nlet refareshtokens = res.data.refreshtoken\npm.environment.set(\"accsess2\",accessToken)\npm.environment.set(\"refresh2\",refareshtokens)"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"midfay\":\"omarshawky\",\n    \"passwerd\":\"123444\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseurl}}/user/login",
+              "host": [
+                "{{baseurl}}"
+              ],
+              "path": [
+                "user",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "profile",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accsess2}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseurl}}/user/prfile",
+              "host": [
+                "{{baseurl}}"
+              ],
+              "path": [
+                "user",
+                "prfile"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "refreshtoken",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "let res = pm.response.json();\nlet accesstoken3 = res.data.accesstoken\npm.environment.set(\"accesstoken3\", accesstoken3);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{refresh2}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseurl}}/user/refreshtoken",
+              "host": [
+                "{{baseurl}}"
+              ],
+              "path": [
+                "user",
+                "refreshtoken"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
